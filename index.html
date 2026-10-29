@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ЭНИП-Тетрис</title>
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Шапка / Заголовок -->
+    <header class="game-header">
+      <div class="title-wrap">
+        <h1>ЭНИП-ТЕТРИС</h1>
+        <span class="subtitle" id="device-title">Устройства ЭНИП</span>
+      </div>
+      <div class="header-actions">
+        <button id="sound-btn" class="icon-btn" title="Звук">🔊</button>
+        <button id="pause-btn" class="icon-btn" title="Пауза">⏸️</button>
+      </div>
+    </header>
+
+    <!-- Основная игровая зона -->
+    <main class="game-area">
+      <!-- Игровой холст -->
+      <div class="canvas-wrap">
+        <canvas id="tetris-canvas"></canvas>
+        <!-- Оверлей паузы и окончания игры -->
+        <div id="game-overlay" class="overlay hidden">
+          <div class="overlay-card">
+            <h2 id="overlay-title">ИГРА ОКОНЧЕНА</h2>
+            <p id="overlay-subtitle">Счёт: <span id="final-score">0</span></p>
+            <button id="restart-btn" class="primary-btn">Играть снова</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Боковая панель -->
+      <aside class="sidebar">
+        <!-- Превью следующей фигуры -->
+        <div class="panel-box next-box">
+          <span class="box-label">СЛЕДУЮЩАЯ</span>
+          <canvas id="next-canvas" width="100" height="100"></canvas>
+          <span id="next-name" class="device-name">—</span>
+        </div>
+
+        <!-- Статистика -->
+        <div class="panel-box stats-box">
+          <div class="stat-item">
+            <span class="stat-label">СЧЁТ</span>
+            <span id="score-val" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">РЕКОРД</span>
+            <span id="highscore-val" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">УРОВЕНЬ</span>
+            <span id="level-val" class="stat-value">1</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">ЛИНИИ</span>
+            <span id="lines-val" class="stat-value">0</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Мобильные экранные кнопки управления -->
+    <footer class="touch-controls">
+      <div class="touch-row">
+        <button id="ctrl-left" class="touch-btn" aria-label="Влево">◀</button>
+        <button id="ctrl-rotate" class="touch-btn rotate-btn" aria-label="Повернуть">↻</button>
+        <button id="ctrl-right" class="touch-btn" aria-label="Вправо">▶</button>
+      </div>
+      <div class="touch-row second-row">
+        <button id="ctrl-down" class="touch-btn down-btn" aria-label="Вниз">▼</button>
+        <button id="ctrl-drop" class="touch-btn drop-btn" aria-label="Сброс">⏬ СБРОС</button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

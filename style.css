@@ -1,0 +1,331 @@
+:root {
+  --bg-color: #0e1621;
+  --panel-bg: #17212b;
+  --card-bg: #242f3d;
+  --accent-color: #2b5278;
+  --accent-hover: #356391;
+  --text-main: #ffffff;
+  --text-muted: #8e9ca8;
+  --highlight: #64b5f6;
+  --danger: #e53935;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Переопределение темы под цвета Telegram WebApp, если они переданы */
+body.tg-theme {
+  --bg-color: var(--tg-theme-bg-color, #0e1621);
+  --panel-bg: var(--tg-theme-secondary-bg-color, #17212b);
+  --text-main: var(--tg-theme-text-color, #ffffff);
+  --text-muted: var(--tg-theme-hint-color, #8e9ca8);
+  --accent-color: var(--tg-theme-button-color, #2b5278);
+  --text-btn: var(--tg-theme-button-text-color, #ffffff);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  touch-action: none;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 10px 12px;
+  justify-content: space-between;
+}
+
+/* Шапка */
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.title-wrap h1 {
+  font-size: 1.15rem;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  color: var(--highlight);
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+  background: var(--accent-color);
+}
+
+/* Игровое поле и сайдбар */
+.game-area {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  min-height: 0;
+  padding: 6px 0;
+}
+
+.canvas-wrap {
+  position: relative;
+  background: #090e15;
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#tetris-canvas {
+  display: block;
+  border-radius: 6px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Сайдбар */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 110px;
+}
+
+.panel-box {
+  background: var(--panel-bg);
+  border-radius: 10px;
+  padding: 8px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.box-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.next-box canvas {
+  background: #090e15;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+
+.device-name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--highlight);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 95px;
+}
+
+.stats-box {
+  gap: 6px;
+}
+
+.stat-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Оверлей меню/game over */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(14, 22, 33, 0.88);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  z-index: 10;
+  transition: opacity 0.2s;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay-card {
+  text-align: center;
+  padding: 18px 14px;
+}
+
+.overlay-card h2 {
+  font-size: 1.25rem;
+  color: #ff5252;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.overlay-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.overlay-card span {
+  color: var(--highlight);
+  font-weight: bold;
+}
+
+.primary-btn {
+  background: var(--accent-color);
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.primary-btn:active {
+  transform: scale(0.95);
+  background: var(--accent-hover);
+}
+
+/* Сенсорные кнопки управления для мобилок / Telegram */
+.touch-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 6px 0 2px;
+}
+
+.touch-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.touch-btn {
+  background: var(--card-bg);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  height: 48px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  transition: background 0.1s, transform 0.08s;
+  touch-action: manipulation;
+}
+
+.touch-btn:active {
+  background: var(--accent-color);
+  transform: scale(0.94);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.rotate-btn {
+  background: var(--accent-color);
+  font-size: 1.35rem;
+}
+
+.second-row .touch-btn {
+  height: 44px;
+}
+
+.down-btn {
+  flex: 1;
+  font-size: 1.1rem;
+}
+
+.drop-btn {
+  flex: 2;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  background: #2b3a4a;
+  color: #e0e0e0;
+}
+
+.drop-btn:active {
+  background: #3e5368;
+}
+
+/* Адаптивность для высоких экранов */
+@media (min-height: 700px) {
+  .touch-btn {
+    height: 52px;
+  }
+  .second-row .touch-btn {
+    height: 46px;
+  }
+}
